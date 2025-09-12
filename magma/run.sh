@@ -46,10 +46,10 @@ fi
 
 # launch the fuzzer in parallel with the monitor
 rm -f "$MONITOR/tmp"*
-polls=("$MONITOR"/*)
-if [ ${#polls[@]} -eq 1 ] && [ "${polls[0]}" = "$MONITOR"'/*' ]; then
+if [ -z "$(ls $MONITOR)" ]; then
     counter=0
 else
+    polls=("$MONITOR"/*)
     timestamps=($(sort -n < <(basename -a "${polls[@]}")))
     last=${timestamps[-1]}
     counter=$(( last + POLL ))
