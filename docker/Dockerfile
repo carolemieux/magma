@@ -25,11 +25,13 @@ ENV RANLIB /usr/bin/ranlib
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
+ENV USERID ${USER_ID}
+ENV GROUPID ${GROUP_ID}
 RUN mkdir -p /home && \
-	groupadd -g ${GROUP_ID} magma && \
-	useradd -l -u ${USER_ID} -K UMASK=0000 -d /home -g magma magma && \
+	groupadd -g ${GROUPID} magma && \
+	useradd -l -u ${USERID} -K UMASK=0000 -d /home -g magma magma && \
 	chown magma:magma /home
-RUN	echo "magma:amgam" | chpasswd && usermod -a -G sudo magma
+RUN	echo "magma:magma" | chpasswd && usermod -a -G sudo magma
 
 RUN mkdir -p ${SHARED} ${OUT} && \
 	chown magma:magma ${SHARED} ${OUT} && \
